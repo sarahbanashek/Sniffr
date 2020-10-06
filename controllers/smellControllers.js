@@ -46,6 +46,32 @@ const smellController = {
                 res.render(process.cwd() + '/views/feed', {title: 'Feed', username: req.user.username, smellsArr: smellsArr});
             }
         });        
+    },
+    kickSmell: (req, res) => {
+        Smell.findById(req.params.smellID, (err, data) => {
+            if (err) {
+                res.json({error: err});
+            } else {
+                
+                const newSmell = new Smell({
+                    textContent: data.textContent,
+                    imageContent: data.imageContent,
+                    creator: req.user._id,
+                    dateCreated: Date.now(),
+                    uplickCount: 0,
+                    downpoopCount: 0,
+                    kickedFrom: data.creator,
+                    originalId: req.params.smellID
+                });
+                newSmell.save(err => {
+                    if (err) {
+                        res.send(err);
+                    } else {
+                        res.redirect('back');
+                    }
+                })
+            }
+        });
     }
 }
 

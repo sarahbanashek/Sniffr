@@ -15,6 +15,7 @@ require('./db').connectToDb();
 // const databaseUrl = process.env.DB_CONNECTION_STRING;
 // const dbOptions = { useUnifiedTopology: true, useNewUrlParser: true };
 const userController = require('./controllers/userControllers');
+const smellController = require('./controllers/smellControllers');
 
 
 app.set('view engine', 'pug');
@@ -33,50 +34,51 @@ app.use(passport.session());
 // mongoose.connect(databaseUrl, dbOptions)
 //  .then(() => console.log('Connected to MongoDB'))
 //  .catch(err => console.error('Connection error', err));
-const Smell = mongoose.model('Smell', 
-    new mongoose.Schema({
-        textContent: String,
-        imageContent: String,
-        creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-        dateCreated: Date,
-        uplickCount: Number,
-        uplick: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-        downpoopCount: Number,
-        downpoop: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-        kickedFrom: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-        originalId: mongoose.Schema.Types.ObjectId
-    })
-);
+// const Smell = mongoose.model('Smell', 
+//     new mongoose.Schema({
+//         textContent: String,
+//         imageContent: String,
+//         creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+//         dateCreated: Date,
+//         uplickCount: Number,
+//         uplick: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+//         downpoopCount: Number,
+//         downpoop: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+//         kickedFrom: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+//         originalId: mongoose.Schema.Types.ObjectId
+//     })
+// );
 
 passport.serializeUser((user, done) => {
     done(null, user._id);
 });
 
-passport.deserializeUser((id, done) => {
-    User.findById(id, (err, user) => {
-      done(err, user);
-    });
-});
+passport.deserializeUser(userController.passportDeserializeUser);
+//     (id, done) => {
+//     User.findById(id, (err, user) => {
+//       done(err, user);
+//     });
+// });
 
-passport.use(new LocalStrategy(
-    (username, password, done) => {
-        User.findOne({ username: username, password: password }, (err, user) => {
-            console.log(`User ${username} attempted to log in`);
-            if (err) {
-                return done(err);
-            }
-            if (!user) {
-                console.log('username does not exist');
-                return done(null, false);
-            }
-            if (user.password !== password) {
-                console.log('incorrect password');
-                return done(null, false)
-            }
-            return done(null, user);
-        });
-    }
-));
+passport.use(new LocalStrategy(userController.userLogIn));
+    // (username, password, done) => {
+    //     User.findOne({ username: username, password: password }, (err, user) => {
+    //         console.log(`User ${username} attempted to log in`);
+    //         if (err) {
+    //             return done(err);
+    //         }
+    //         if (!user) {
+    //             console.log('username does not exist');
+    //             return done(null, false);
+    //         }
+    //         if (user.password !== password) {
+    //             console.log('incorrect password');
+    //             return done(null, false)
+    //         }
+    //         return done(null, user);
+    //     });
+    // }
+
 
 const ensureAuthenticated = (req, res, next) => {
     if (!req.isAuthenticated()) {
@@ -90,7 +92,7 @@ app.get('/', (_, res) => {
     res.render(process.cwd() + '/views/login', {title: 'Login'});
 });
 
-app.post('/login', passport.authenticate('local', { failureRedirect: '/' }), (req, res) => {
+app.post('/login', passport.authenticate('local', { failureRedirect: '/' }), (_, res) => {
     res.redirect('/feed');
 });
 
@@ -132,31 +134,32 @@ app.route('/welcome')
         }
     });
 
-app.get('/feed', ensureAuthenticated, (req, res) => {
-    Smell.find({})
-        .sort({dateCreated: -1})
-        .limit(30)
-        .populate('creator', 'username -_id')
-        .populate('uplick', 'username -_id')
-        .populate('downpoop', 'username -_id')
-        .populate('kickedFrom', 'username -_id')
-        .exec((err, docs) => {
-        if (err) {
-            res.send(err);
-        } else {
-            const smellsArr = docs;
-            smellsArr.forEach(smell => {
-                smell.uplickUrl = '/uplick/' + smell._id;
-                smell.downpoopUrl = '/downpoop/' + smell._id;
-                smell.kickUrl = '/kick/' + smell._id;
-                smell.deleteUrl = '/deleteSmell/' + smell._id;
-                smell.uplickers = smell.uplick.map(x => x.username).join(', ');
-                smell.downpoopers = smell.downpoop.map(x => x.username).join(', ');
-            });
-            res.render(process.cwd() + '/views/feed', {title: 'Feed', username: req.user.username, smellsArr: smellsArr});
-        }
-    });        
-});
+app.get('/feed', ensureAuthenticated, smellController.smellFeed);
+    // (req, res) => {
+    // Smell.find({})
+    //     .sort({dateCreated: -1})
+    //     .limit(30)
+    //     .populate('creator', 'username -_id')
+    //     .populate('uplick', 'username -_id')
+    //     .populate('downpoop', 'username -_id')
+    //     .populate('kickedFrom', 'username -_id')
+    //     .exec((err, docs) => {
+    //     if (err) {
+    //         res.send(err);
+    //     } else {
+    //         const smellsArr = docs;
+    //         smellsArr.forEach(smell => {
+    //             smell.uplickUrl = '/uplick/' + smell._id;
+    //             smell.downpoopUrl = '/downpoop/' + smell._id;
+    //             smell.kickUrl = '/kick/' + smell._id;
+    //             smell.deleteUrl = '/deleteSmell/' + smell._id;
+    //             smell.uplickers = smell.uplick.map(x => x.username).join(', ');
+    //             smell.downpoopers = smell.downpoop.map(x => x.username).join(', ');
+    //         });
+    //         res.render(process.cwd() + '/views/feed', {title: 'Feed', username: req.user.username, smellsArr: smellsArr});
+    //     }
+    // });        
+// });
 
 app.post('/createSmell', ensureAuthenticated, (req, res) => {
     if (req.body.postContent === '' && req.body.imageContent === '') {

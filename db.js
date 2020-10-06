@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const connectToDb = () => {
     console.log('connecting to db')
-    console.dir(process.env);
+    // console.dir(process.env);
     const databaseUrl = process.env.DB_CONNECTION_STRING;
     const dbOptions = { useUnifiedTopology: true, useNewUrlParser: true };
 

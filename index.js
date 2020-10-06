@@ -234,47 +234,49 @@ app.get('/uplick/:smellID', ensureAuthenticated, smellController.uplick);
 //     });
 // });
 
-app.get('/downpoop/:smellID', ensureAuthenticated, (req, res) => {
-    Smell.findById(req.params.smellID, (err, data) => {
-        if (err) {
-            res.send(err);
-        }
-        const hasUserDownpooped = data.downpoop.includes(req.user._id);
-        const updateObject = hasUserDownpooped 
-            ? { $inc: {downpoopCount: -1 }, $pull: {downpoop: req.user._id} }
-            : { $inc: {downpoopCount: 1 }, $push: {downpoop: req.user._id} };
+app.get('/downpoop/:smellID', ensureAuthenticated, smellController.downpoop);
+// (req, res) => {
+//     Smell.findById(req.params.smellID, (err, data) => {
+//         if (err) {
+//             res.send(err);
+//         }
+//         const hasUserDownpooped = data.downpoop.includes(req.user._id);
+//         const updateObject = hasUserDownpooped 
+//             ? { $inc: {downpoopCount: -1 }, $pull: {downpoop: req.user._id} }
+//             : { $inc: {downpoopCount: 1 }, $push: {downpoop: req.user._id} };
 
-        Smell.findByIdAndUpdate(req.params.smellID, updateObject, {new: true})
-            .populate('downpoop', 'username -_id')
-            .exec((err, data) => {
-            if (err) {
-                res.send(err);
-            }
-            res.json(data);
-        });
-    });
-});
+//         Smell.findByIdAndUpdate(req.params.smellID, updateObject, {new: true})
+//             .populate('downpoop', 'username -_id')
+//             .exec((err, data) => {
+//             if (err) {
+//                 res.send(err);
+//             }
+//             res.json(data);
+//         });
+//     });
+// });
 
-app.get('/deleteSmell/:smellID', ensureAuthenticated, (req, res) => {
-    Smell.findById(req.params.smellID)
-        .populate('creator', 'username -_id')
-        .exec((err, doc) => {
-            if (err) {
-                res.send(err);
-            } 
-            if (doc.creator.username === req.user.username) {
-                doc.remove(err => {
-                    if(err) {
-                        res.send(err);
-                    } else {
-                        res.redirect('back');
-                    }
-                })
-            } else {
-                res.send('You do not have permission to remove this smell.');
-            }
-        });
-});
+app.get('/deleteSmell/:smellID', ensureAuthenticated, smellController.deleteSmell);
+// (req, res) => {
+//     Smell.findById(req.params.smellID)
+//         .populate('creator', 'username -_id')
+//         .exec((err, doc) => {
+//             if (err) {
+//                 res.send(err);
+//             } 
+//             if (doc.creator.username === req.user.username) {
+//                 doc.remove(err => {
+//                     if(err) {
+//                         res.send(err);
+//                     } else {
+//                         res.redirect('back');
+//                     }
+//                 })
+//             } else {
+//                 res.send('You do not have permission to remove this smell.');
+//             }
+//         });
+// });
 
 app.get('/profile', ensureAuthenticated, (req, res) => {
     Smell.find({ creator: req.user._id })

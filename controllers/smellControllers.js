@@ -92,6 +92,46 @@ const smellController = {
                 res.json(data);
             });
         });
+    },
+    downpoop: (req, res) => {
+        Smell.findById(req.params.smellID, (err, data) => {
+            if (err) {
+                res.send(err);
+            }
+            const hasUserDownpooped = data.downpoop.includes(req.user._id);
+            const updateObject = hasUserDownpooped 
+                ? { $inc: {downpoopCount: -1 }, $pull: {downpoop: req.user._id} }
+                : { $inc: {downpoopCount: 1 }, $push: {downpoop: req.user._id} };
+    
+            Smell.findByIdAndUpdate(req.params.smellID, updateObject, {new: true})
+                .populate('downpoop', 'username -_id')
+                .exec((err, data) => {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(data);
+            });
+        });
+    },
+    deleteSmell: (req, res) => {
+        Smell.findById(req.params.smellID)
+            .populate('creator', 'username -_id')
+            .exec((err, doc) => {
+                if (err) {
+                    res.send(err);
+                } 
+                if (doc.creator.username === req.user.username) {
+                    doc.remove(err => {
+                        if(err) {
+                            res.send(err);
+                        } else {
+                            res.redirect('back');
+                        }
+                    })
+                } else {
+                    res.send('You do not have permission to remove this smell.');
+                }
+            });
     }
 }
 

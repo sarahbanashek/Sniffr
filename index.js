@@ -278,31 +278,32 @@ app.get('/deleteSmell/:smellID', ensureAuthenticated, smellController.deleteSmel
 //         });
 // });
 
-app.get('/profile', ensureAuthenticated, (req, res) => {
-    Smell.find({ creator: req.user._id })
-        .sort({dateCreated: -1})
-        .limit(10)
-        .populate('creator', 'username -_id')
-        .populate('uplick', 'username -_id')
-        .populate('downpoop', 'username -_id')
-        .populate('kickedFrom', 'username -_id')
-        .exec((err, docs) => {
-            if (err) {
-                res.send(err);
-            } else {
-                const smellsArr = docs;
-                smellsArr.forEach(smell => {
-                smell.uplickUrl = '/uplick/' + smell._id;
-                smell.downpoopUrl = '/downpoop/' + smell._id;
-                smell.kickUrl = '/kick/' + smell._id;
-                smell.deleteUrl = '/deleteSmell/' + smell._id;
-                smell.uplickers = smell.uplick.map(x => x.username).join(', ');
-                smell.downpoopers = smell.downpoop.map(x => x.username).join(', ');
-                });
-                res.render(process.cwd() + '/views/profile', {title: 'Profile', username: req.user.username, smellsArr: smellsArr});
-            }
-    }); 
-});
+app.get('/profile', ensureAuthenticated, smellController.profileFeed);
+// (req, res) => {
+//     Smell.find({ creator: req.user._id })
+//         .sort({dateCreated: -1})
+//         .limit(10)
+//         .populate('creator', 'username -_id')
+//         .populate('uplick', 'username -_id')
+//         .populate('downpoop', 'username -_id')
+//         .populate('kickedFrom', 'username -_id')
+//         .exec((err, docs) => {
+//             if (err) {
+//                 res.send(err);
+//             } else {
+//                 const smellsArr = docs;
+//                 smellsArr.forEach(smell => {
+//                 smell.uplickUrl = '/uplick/' + smell._id;
+//                 smell.downpoopUrl = '/downpoop/' + smell._id;
+//                 smell.kickUrl = '/kick/' + smell._id;
+//                 smell.deleteUrl = '/deleteSmell/' + smell._id;
+//                 smell.uplickers = smell.uplick.map(x => x.username).join(', ');
+//                 smell.downpoopers = smell.downpoop.map(x => x.username).join(', ');
+//                 });
+//                 res.render(process.cwd() + '/views/profile', {title: 'Profile', username: req.user.username, smellsArr: smellsArr});
+//             }
+//     }); 
+// });
 
 app.get('/logout', (req, res) => {
     req.logout();

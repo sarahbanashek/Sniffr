@@ -212,26 +212,27 @@ app.post('/kick/:smellID', ensureAuthenticated, smellController.kickSmell);
 //     });
 // })
 
-app.get('/uplick/:smellID', ensureAuthenticated, (req, res) => {
-    Smell.findById(req.params.smellID, (err, data) => {
-        if (err) {
-            res.json({error: err});
-        }
-        const hasUserUplicked = data.uplick.includes(req.user._id);
-        const updateObject = hasUserUplicked 
-            ? { $inc: {uplickCount: -1 }, $pull: {uplick: req.user._id} }
-            : { $inc: {uplickCount: 1 }, $push: {uplick: req.user._id} };
+app.get('/uplick/:smellID', ensureAuthenticated, smellController.uplick);
+// (req, res) => {
+//     Smell.findById(req.params.smellID, (err, data) => {
+//         if (err) {
+//             res.json({error: err});
+//         }
+//         const hasUserUplicked = data.uplick.includes(req.user._id);
+//         const updateObject = hasUserUplicked 
+//             ? { $inc: {uplickCount: -1 }, $pull: {uplick: req.user._id} }
+//             : { $inc: {uplickCount: 1 }, $push: {uplick: req.user._id} };
 
-        Smell.findByIdAndUpdate(req.params.smellID, updateObject, {new: true})
-            .populate('uplick', 'username -_id')
-            .exec((err, data) => {
-            if (err) {
-                res.send(err);
-            }
-            res.json(data);
-        });
-    });
-});
+//         Smell.findByIdAndUpdate(req.params.smellID, updateObject, {new: true})
+//             .populate('uplick', 'username -_id')
+//             .exec((err, data) => {
+//             if (err) {
+//                 res.send(err);
+//             }
+//             res.json(data);
+//         });
+//     });
+// });
 
 app.get('/downpoop/:smellID', ensureAuthenticated, (req, res) => {
     Smell.findById(req.params.smellID, (err, data) => {

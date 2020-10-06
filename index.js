@@ -161,27 +161,28 @@ app.get('/feed', ensureAuthenticated, smellController.smellFeed);
     // });        
 // });
 
-app.post('/createSmell', ensureAuthenticated, (req, res) => {
-    if (req.body.postContent === '' && req.body.imageContent === '') {
-        res.redirect('back');
-    } else {
-        const newSmell = new Smell({
-            textContent: req.body.postContent,
-            imageContent: req.body.imageContent,
-            creator: req.user._id,
-            dateCreated: Date.now(),
-            uplickCount: 0,
-            downpoopCount: 0
-        });
-        newSmell.save(err => {
-            if (err) {
-                res.send(err);
-            } else {
-                res.redirect('back');
-            }
-        });
-    }
-});
+app.post('/createSmell', ensureAuthenticated, smellController.createSmell);
+// (req, res) => {
+//     if (req.body.postContent === '' && req.body.imageContent === '') {
+//         res.redirect('back');
+//     } else {
+//         const newSmell = new Smell({
+//             textContent: req.body.postContent,
+//             imageContent: req.body.imageContent,
+//             creator: req.user._id,
+//             dateCreated: Date.now(),
+//             uplickCount: 0,
+//             downpoopCount: 0
+//         });
+//         newSmell.save(err => {
+//             if (err) {
+//                 res.send(err);
+//             } else {
+//                 res.redirect('back');
+//             }
+//         });
+//     }
+// });
 
 app.post('/kick/:smellID', ensureAuthenticated, (req, res) => {
     Smell.findById(req.params.smellID, (err, data) => {

@@ -1,6 +1,27 @@
 const Smell = require('../models/Smell');
 
 const smellController = {
+    createSmell: (req, res) => {
+        if (req.body.postContent === '' && req.body.imageContent === '') {
+            res.redirect('back');
+        } else {
+            const newSmell = new Smell({
+                textContent: req.body.postContent,
+                imageContent: req.body.imageContent,
+                creator: req.user._id,
+                dateCreated: Date.now(),
+                uplickCount: 0,
+                downpoopCount: 0
+            });
+            newSmell.save(err => {
+                if (err) {
+                    res.send(err);
+                } else {
+                    res.redirect('back');
+                }
+            });
+        }
+    },
     smellFeed: (req, res) => {
         Smell.find({})
         .sort({dateCreated: -1})

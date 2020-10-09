@@ -3,70 +3,49 @@ const Smell = require('../../models/Smell');
 
 describe('Controller: smellController', () => {
     describe('Function: createSmell', () => {
-        it('redirects to "back" if post & image content are both empty', () => {
-            const fakeRedirect = jest.fn();
-            const fakeRequest = {
+        let fakeRequest;
+        let fakeResponse;
+        beforeEach(() => {
+            fakeRequest = {
+                user: 'id',
                 body: {
                     postContent: '',
                     imageContent: ''
                 }
             }
-            const fakeResponse = {
-                redirect: fakeRedirect
-            }
+            fakeResponse = {}
+        });
+        it('redirects to "back" if post & image content are both empty', () => {
+            fakeResponse.redirect = jest.fn();
             const expectedRedirect = 'back';
-            
             
             smellController.createSmell(fakeRequest, fakeResponse);
 
-
-            expect(fakeRedirect).toHaveBeenCalledWith(expectedRedirect);
+            expect(fakeResponse.redirect).toHaveBeenCalledWith(expectedRedirect);
         });
         it('sends an error if the Smell model throws an error when saving', () => {
-            const fakeSend = jest.fn();
-            const fakeRequest = {
-                user: 'id',
-                body: {
-                    postContent: 'content',
-                    imageContent: ''
-                }
-            }
-            const fakeResponse = {
-                send: fakeSend
-            }
+            fakeRequest.body.postContent = 'content';
+            fakeResponse.send = jest.fn();
             const expectedError = 'error';
             jest.spyOn(Smell.prototype, 'save').mockImplementation((callback) => {
                 callback(expectedError);
             });
 
-
             smellController.createSmell(fakeRequest, fakeResponse);
 
-
-            expect(fakeSend).toHaveBeenCalledWith(expectedError);
+            expect(fakeResponse.send).toHaveBeenCalledWith(expectedError);
         });
         it('redirects to "back" if the Smell model does not throw an error when saving', () => {
-            const fakeRedirect = jest.fn();
-            const fakeRequest = {
-                user: 'id',
-                body: {
-                    postContent: 'content',
-                    imageContent: ''
-                }
-            }
-            const fakeResponse = {
-                redirect: fakeRedirect
-            }
+            fakeRequest.body.postContent = 'content';
+            fakeResponse.redirect = jest.fn();
             const expectedRedirect = 'back';
             jest.spyOn(Smell.prototype, 'save').mockImplementation((callback) => {
                 callback(null);
             });
 
-
             smellController.createSmell(fakeRequest, fakeResponse);
 
-
-            expect(fakeRedirect).toHaveBeenCalledWith(expectedRedirect);
+            expect(fakeResponse.redirect).toHaveBeenCalledWith(expectedRedirect);
         });
     });
 });

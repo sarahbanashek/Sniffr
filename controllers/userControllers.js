@@ -16,6 +16,7 @@ const userController = {
             }
         })
     },
+    // TODO: render an error message when login fails
     userLogIn: (username, password, done) => {
         User.findOne({ username: username, password: password }, (err, user) => {
             console.log(`User ${username} attempted to log in`);
@@ -33,6 +34,7 @@ const userController = {
             return done(null, user);
         });
     },
+    // TODO: Find a better spot for this
     passportDeserializeUser: (id, done) => {
         User.findById(id, (err, user) => {
           done(err, user);
@@ -40,35 +42,5 @@ const userController = {
     }
 }
 
-/*
-const stub = (object, propertyname) => {
-    object[propertyname] = {
-        calls: 0,
-        calledWith: [],
-        callsFake: (fn) => object.propertyname = (args) => {
-            calls++;
-            calledWith.push(args)
-            fn(args)
-        }
-    }
-}
-
-// Setup
-const expectedErrorString = 'someerrorstring';
-const fakeResponse = {};
-const sendStub = stub(fakeResponse, 'send').callsFake(() => {})
-stub(User, 'find').callsFake((_, callback) => {
-    callback(expectedErrorString);
-})
-
-// Act
-userController.checkUserName(_, fakeResponse);
-
-// Assert
-expect(sendStub.calledWith[0]).toEqual('someerrorstring');
-
-
-res.send
-*/
 
 module.exports = userController;

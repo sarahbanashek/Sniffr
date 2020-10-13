@@ -69,6 +69,88 @@ describe('Controller: userController', () => {
             expect(fakeSend).toHaveBeenCalledWith(expectedSentObject);
         });
     });
+    describe('Function: welcomeUser', () => {
+        let fakeRequest;
+        let fakeResponse = {};
+        beforeEach(() => {
+            fakeRequest = {
+                body: {
+                    firstName: 'First',
+                    lastName: 'Last',
+                    username: 'username',
+                    password: 123,
+                    confirmpassword: 123
+                }
+            }
+            fakeResponse = {}
+        });
+        test('sends a message if passwords do not match', () => {
+            fakeRequest.body.confirmpassword = 456;
+            fakeResponse.send = jest.fn();
+            const expectedSentMessage = 'Passwords do not match!';
+
+            userController.welcomeUser(fakeRequest, fakeResponse);
+
+            expect(fakeResponse.send).toHaveBeenCalledWith(expectedSentMessage);
+        });
+        test('sends an error if User.find throws an error', () => {
+            fakeResponse.send = jest.fn();
+            const expectedError = 'error';
+            jest.spyOn(User, 'find').mockImplementation((_, callback) => {
+                callback(expectedError);
+            });
+
+            userController.welcomeUser(fakeRequest, fakeResponse);
+
+            expect(fakeResponse.send).toHaveBeenCalledWith(expectedError);
+        });
+        test('sends an error if newUser.save throws an error', () => {
+            jest.spyOn(User, 'find').mockImplementation((_, callback) => {
+                callback(null, []);
+            });
+            const expectedError = 'error';
+            fakeResponse.send = jest.fn();
+            jest.spyOn(User.prototype, 'save').mockImplementation((callback) => {
+                callback(expectedError);
+            });
+
+            userController.welcomeUser(fakeRequest, fakeResponse);
+
+            expect(fakeResponse.send).toHaveBeenCalledWith(expectedError);
+        });
+        test('renders the welcome page if the username is available', () => {
+            jest.spyOn(User, 'find').mockImplementation((_, callback) => {
+                callback(null, []);
+            });
+            const userDoc = {
+                username: 'username'
+            }
+            const expectedResObject = {
+                title: 'Welcome New User',
+                username: userDoc.username
+            }
+            fakeResponse.render = jest.fn();
+            jest.spyOn(User.prototype, 'save').mockImplementation((callback) => {
+                callback(null, userDoc);
+            });
+            jest.spyOn(process, 'cwd').mockReturnValue('');
+
+            userController.welcomeUser(fakeRequest, fakeResponse);
+
+            expect(fakeResponse.render).toHaveBeenCalledWith('/views/welcome', expectedResObject);
+        });
+        test('sends a message if username is already in use', () => {
+            jest.spyOn(User, 'find').mockImplementation((_, callback) => {
+                callback(null, ['username']);
+            });
+            const expectedSentMessage = 'Please choose a different username';
+            fakeResponse.send = jest.fn();
+
+            userController.welcomeUser(fakeRequest, fakeResponse);
+
+            expect(fakeResponse.send).toHaveBeenCalledWith(expectedSentMessage);
+        });
+    });
     describe('Function: userLogIn', () => {
         it('returns an error if the User model throws an error', () => {
             const done = jest.fn();

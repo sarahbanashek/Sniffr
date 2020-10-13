@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
-const LocalStrategy = require('passport-local');
 const session = require('express-session');
 
 // Load environment variables
@@ -23,16 +22,10 @@ app.use(session({
     resave: true,
     saveUninitialized: true
  }));
+require('./config/passport.js')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser((user, done) => {
-    done(null, user._id);
-});
-
-passport.deserializeUser(userController.passportDeserializeUser);
-
-passport.use(new LocalStrategy(userController.userLogIn));
 
 const ensureAuthenticated = (req, res, next) => {
     if (!req.isAuthenticated()) {

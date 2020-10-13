@@ -19,7 +19,7 @@ app.use('/public', express.static(process.cwd() + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({ 
-    secret: 'the poop is king',
+    secret: process.env.session_secret,
     resave: true,
     saveUninitialized: true
  }));

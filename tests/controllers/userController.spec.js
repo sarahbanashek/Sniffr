@@ -3,38 +3,26 @@ const User = require('../../models/User');
 
 describe('Controller: userController', () => {
     describe('Function: checkUserName', () => {
+        const fakeRequest = {
+            params: {
+                username: 'user'
+            }
+        }
+        const fakeResponse = {}
         test('sends an error if the User model throws an error', () => {
-            // Setup
-            const fakeRequest = {
-                params: {
-                    username: 'user'
-                }
-            }
-            const fakeResponse = {
-                send: jest.fn()
-            }
-            const expectedError = 'e';
+            fakeResponse.send = jest.fn();
+            const expectedError = 'error';
             jest.spyOn(User, 'find').mockImplementation((_, callback) => {
                 callback(expectedError);
             });
 
-            // Act
             userController.checkUserName(fakeRequest, fakeResponse);
 
-            // Assert
             expect(fakeResponse.send).toHaveBeenCalledWith(expectedError);
 
         });
         test('sends {available: true} if the username is not found', () => {
-            const fakeSend = jest.fn();
-            const fakeRequest = {
-                params: {
-                    username: 'user'
-                }
-            }
-            const fakeResponse = {
-                send: fakeSend
-            }
+            fakeResponse.send = jest.fn();
             const expectedSentObject = { available: true }
             jest.spyOn(User, 'find').mockImplementation((_, callback) => {
                 callback(null, []);
@@ -42,18 +30,10 @@ describe('Controller: userController', () => {
 
             userController.checkUserName(fakeRequest, fakeResponse);
 
-            expect(fakeSend).toHaveBeenCalledWith(expectedSentObject);
+            expect(fakeResponse.send).toHaveBeenCalledWith(expectedSentObject);
         });
         test('sends {available: false} if the username already exists', () => {
-            const fakeSend = jest.fn();
-            const fakeRequest = {
-                params: {
-                    username: 'user'
-                }
-            }
-            const fakeResponse = {
-                send: fakeSend
-            }
+            fakeResponse.send = jest.fn();
             const expectedSentObject = { available: false }
             jest.spyOn(User, 'find').mockImplementation((_, callback) => {
                 callback(null, ['user']);
@@ -61,7 +41,7 @@ describe('Controller: userController', () => {
 
             userController.checkUserName(fakeRequest, fakeResponse);
 
-            expect(fakeSend).toHaveBeenCalledWith(expectedSentObject);
+            expect(fakeResponse.send).toHaveBeenCalledWith(expectedSentObject);
         });
     });
     describe('Function: welcomeUser', () => {
@@ -77,7 +57,6 @@ describe('Controller: userController', () => {
                     confirmpassword: 123
                 }
             }
-            fakeResponse = {}
         });
         test('sends a message if passwords do not match', () => {
             fakeRequest.body.confirmpassword = 456;

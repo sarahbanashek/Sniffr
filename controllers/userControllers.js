@@ -31,7 +31,6 @@ const userController = {
                             username: req.body.username,
                             password: req.body.password
                         });
-                        console.dir(req.body);
                         newUser.save((err, userDoc) => {
                             if (err) {
                                 res.send(err)

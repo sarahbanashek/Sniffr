@@ -23,14 +23,14 @@ mixin displaySmells(smellsArr)
                                 p.uplickButton.btn.btn-primary Uplick
                                 .uplickCount= smell.uplickCount
                                 if smell.uplickCount > 0
-                                    span.lickers-poopers uplickers: 
+                                    span.lickers-poopers uplicked by: 
                                     span.uplickers= smell.uplickers
                                 p(hidden).uplickUrl= smell.uplickUrl
                             .downpoops
                                 p.downpoopButton.btn.btn-primary Downpoop
                                 .downpoopCount= smell.downpoopCount
                                 if smell.downpoopCount > 0
-                                    span.lickers-poopers downpoopers: 
+                                    span.lickers-poopers downpooped by: 
                                     span.downpoopers= smell.downpoopers
                                 p(hidden).downpoopUrl= smell.downpoopUrl
                         form(action=smell.kickUrl method='post').kick
@@ -38,5 +38,8 @@ mixin displaySmells(smellsArr)
                             //- p(hidden).kickUrl= smell.kickUrl
                         .smellTime= smell.dateCreated.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) + ' on ' + smell.dateCreated.toLocaleDateString()
                         if username === smell.creator.username
-                            form(action=smell.deleteUrl method='get').delete
+                            .delete-smell
+                                p(hidden).deleteUrl= smell.deleteUrl
+                                form(action=smell.deleteUrl method='delete').delete
                                 button.deleteButton.btn.btn-sm.btn-danger Delete this smell
+                            

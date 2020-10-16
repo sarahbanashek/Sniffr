@@ -125,7 +125,7 @@ const smellController = {
                         if(err) {
                             res.send(err);
                         } else {
-                            res.redirect('back');
+                            res.json('ok');
                         }
                     })
                 } else {

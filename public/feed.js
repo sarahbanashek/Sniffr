@@ -39,3 +39,19 @@ const downpoopButtons = document.getElementsByClassName('downpoopButton');
 for(let button of downpoopButtons) {
     button.onclick = handleDownpoop;
 }
+
+const handleDeleteSmell = (event) => {
+    const deleteButton = event.target;
+    const deleteUrl = deleteButton.parentNode.getElementsByClassName('deleteUrl')[0].innerText;
+
+    fetch(deleteUrl, {method: 'DELETE'})
+        .then(res => {
+            const thisSmell = deleteButton.closest('.oneSmell');
+            thisSmell.parentNode.removeChild(thisSmell);
+        });
+}
+
+const deleteButtons = document.getElementsByClassName('deleteButton');
+for(let button of deleteButtons) {
+    button.onclick = handleDeleteSmell;
+}

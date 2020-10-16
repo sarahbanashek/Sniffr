@@ -30,7 +30,7 @@ const configureRoutes = (app, authenticationMiddleware) => {
     
     app.get('/downpoop/:smellID', ensureAuthenticated, smellController.downpoop);
     
-    app.get('/deleteSmell/:smellID', ensureAuthenticated, smellController.deleteSmell);
+    app.delete('/deleteSmell/:smellID', ensureAuthenticated, smellController.deleteSmell);
     
     app.get('/profile', ensureAuthenticated, smellController.profileFeed);
 

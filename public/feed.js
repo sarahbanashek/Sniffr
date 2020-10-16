@@ -2,16 +2,16 @@ const handleUplick = (event) => {
     const uplickButton = event.target;
     const uplickCount = uplickButton.parentNode.getElementsByClassName('uplickCount')[0];
     const uplickUrl = uplickButton.parentNode.getElementsByClassName('uplickUrl')[0].innerText;
-    const uplickers = uplickButton.parentNode.getElementsByClassName('uplickers')[0];
+    // const uplickers = uplickButton.parentNode.getElementsByClassName('uplickers')[0];
 
-    fetch(uplickUrl)
+    fetch(uplickUrl, {method: 'POST'})
         .then((response) => {
             return response.json();
         })
         .then((data) => {
             console.log(data);
             uplickCount.innerText = data.uplickCount;
-            uplickers.innerText = data.uplick.map(x => x.username).join(', ')
+            // uplickers.innerText = data.uplick.map(x => x.username).join(', ')
         });
 }
 const uplickButtons = document.getElementsByClassName('uplickButton');
@@ -23,16 +23,16 @@ const handleDownpoop = (event) => {
     const downpoopButton = event.target;
     const downpoopCount = downpoopButton.parentNode.getElementsByClassName('downpoopCount')[0];
     const downpoopUrl = downpoopButton.parentNode.getElementsByClassName('downpoopUrl')[0].innerText;
-    const downpoopers = downpoopButton.parentNode.getElementsByClassName('downpoopers')[0];
+    // const downpoopers = downpoopButton.parentNode.getElementsByClassName('downpoopers')[0];
 
-    fetch(downpoopUrl)
+    fetch(downpoopUrl, {method: 'POST'})
         .then((response) => {
             return response.json();
         })
         .then((data) => {
             console.log(data);
             downpoopCount.innerText = data.downpoopCount;
-            downpoopers.innerText = data.downpoop.map(x => x.username).join(', ');
+            // downpoopers.innerText = data.downpoop.map(x => x.username).join(', ');
         });
 }
 const downpoopButtons = document.getElementsByClassName('downpoopButton');

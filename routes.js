@@ -26,9 +26,9 @@ const configureRoutes = (app, authenticationMiddleware) => {
     
     app.post('/kick/:smellID', ensureAuthenticated, smellController.kickSmell);
     
-    app.get('/uplick/:smellID', ensureAuthenticated, smellController.uplick);
+    app.post('/uplick/:smellID', ensureAuthenticated, smellController.uplick);
     
-    app.get('/downpoop/:smellID', ensureAuthenticated, smellController.downpoop);
+    app.post('/downpoop/:smellID', ensureAuthenticated, smellController.downpoop);
     
     app.delete('/deleteSmell/:smellID', ensureAuthenticated, smellController.deleteSmell);
     

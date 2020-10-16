@@ -22,16 +22,16 @@ mixin displaySmells(smellsArr)
                             .uplicks
                                 p.uplickButton.btn.btn-primary Uplick
                                 .uplickCount= smell.uplickCount
-                                if smell.uplickCount > 0
-                                    span.lickers-poopers uplicked by: 
-                                    span.uplickers= smell.uplickers
+                                //- if smell.uplickCount > 0
+                                    //- span.lickers-poopers uplicked by: 
+                                    //- span.uplickers= smell.uplickers
                                 p(hidden).uplickUrl= smell.uplickUrl
                             .downpoops
                                 p.downpoopButton.btn.btn-primary Downpoop
                                 .downpoopCount= smell.downpoopCount
-                                if smell.downpoopCount > 0
-                                    span.lickers-poopers downpooped by: 
-                                    span.downpoopers= smell.downpoopers
+                                //- if smell.downpoopCount > 0
+                                //-     span.lickers-poopers downpooped by: 
+                                //-     span.downpoopers= smell.downpoopers
                                 p(hidden).downpoopUrl= smell.downpoopUrl
                         form(action=smell.kickUrl method='post').kick
                             button.kickButton.btn.btn-secondary Kick

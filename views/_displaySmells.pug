@@ -20,14 +20,20 @@ mixin displaySmells(smellsArr)
                     .card-footer
                         .licks-and-poops
                             .uplicks
-                                p.uplickButton.btn.btn-primary Uplick
+                                if smell.uplicked
+                                    p.uplickButton.btn.btn-success Uplick
+                                else
+                                    p.uplickButton.btn.btn-primary Uplick
                                 .uplickCount= smell.uplickCount
                                 //- if smell.uplickCount > 0
                                     //- span.lickers-poopers uplicked by: 
                                     //- span.uplickers= smell.uplickers
                                 p(hidden).uplickUrl= smell.uplickUrl
                             .downpoops
-                                p.downpoopButton.btn.btn-primary Downpoop
+                                if smell.downpooped
+                                    p.downpoopButton.btn.btn-success Downpoop
+                                else
+                                    p.downpoopButton.btn.btn-primary Downpoop
                                 .downpoopCount= smell.downpoopCount
                                 //- if smell.downpoopCount > 0
                                 //-     span.lickers-poopers downpooped by: 

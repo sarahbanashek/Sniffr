@@ -6,11 +6,17 @@ const handleUplick = (event) => {
 
     fetch(uplickUrl, {method: 'POST'})
         .then((response) => {
+            console.log(response);
             return response.json();
         })
         .then((data) => {
             console.log(data);
             uplickCount.innerText = data.uplickCount;
+            if (uplickButton.classList.contains('btn-success')) {
+                uplickButton.classList.replace('btn-success', 'btn-primary');
+            } else {
+                uplickButton.classList.replace('btn-primary', 'btn-success');
+            }
             // uplickers.innerText = data.uplick.map(x => x.username).join(', ')
         });
 }
@@ -32,6 +38,11 @@ const handleDownpoop = (event) => {
         .then((data) => {
             console.log(data);
             downpoopCount.innerText = data.downpoopCount;
+            if (downpoopButton.classList.contains('btn-success')) {
+                downpoopButton.classList.replace('btn-success', 'btn-primary');
+            } else {
+                downpoopButton.classList.replace('btn-primary', 'btn-success');
+            }
             // downpoopers.innerText = data.downpoop.map(x => x.username).join(', ');
         });
 }

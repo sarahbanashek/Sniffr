@@ -19,6 +19,7 @@ mixin displaySmells(smellsArr)
                             h5.smellTextContent= smell.textContent
                     .card-footer
                         .licks-and-poops
+                            //- if the order of these nodes or their class names change, event handlers in /public/feed.js may break
                             .uplicks
                                 if smell.uplicked
                                     p.uplickButton.btn.btn-success Uplick
@@ -41,7 +42,6 @@ mixin displaySmells(smellsArr)
                                 p(hidden).downpoopUrl= smell.downpoopUrl
                         form(action=smell.kickUrl method='post').kick
                             button.kickButton.btn.btn-secondary Kick
-                            //- p(hidden).kickUrl= smell.kickUrl
                         .smellTime= smell.dateCreated.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) + ' on ' + smell.dateCreated.toLocaleDateString()
                         if username === smell.creator.username
                             .delete-smell

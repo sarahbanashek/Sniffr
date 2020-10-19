@@ -81,10 +81,19 @@ const smellController = {
                 res.json({error: err});
             }
             const hasUserUplicked = data.uplick.includes(req.user._id);
-            const updateObject = hasUserUplicked 
-                ? { $inc: {uplickCount: -1 }, $pull: {uplick: req.user._id} }
-                : { $inc: {uplickCount: 1 }, $push: {uplick: req.user._id} };
-    
+            const hasUserDownpooped = data.downpoop.includes(req.user._id);
+            let updateObject;
+            if (hasUserUplicked) {
+                updateObject = { $inc: {uplickCount: -1}, $pull: {uplick: req.user._id} }
+            } else if (hasUserDownpooped) {
+                updateObject = { 
+                    $inc: {uplickCount: 1, downpoopCount: -1}, 
+                    $push: {uplick: req.user._id},
+                    $pull: {downpoop: req.user._id}
+                }
+            } else {
+                updateObject = { $inc: {uplickCount: 1}, $push: {uplick: req.user._id} }
+            }
             Smell.findByIdAndUpdate(req.params.smellID, updateObject, {new: true})
                 .populate('uplick', 'username -_id')
                 .exec((err, data) => {
@@ -101,10 +110,19 @@ const smellController = {
                 res.send(err);
             }
             const hasUserDownpooped = data.downpoop.includes(req.user._id);
-            const updateObject = hasUserDownpooped 
-                ? { $inc: {downpoopCount: -1 }, $pull: {downpoop: req.user._id} }
-                : { $inc: {downpoopCount: 1 }, $push: {downpoop: req.user._id} };
-    
+            const hasUserUplicked = data.uplick.includes(req.user._id);
+            let updateObject;
+            if (hasUserDownpooped) {
+                updateObject = { $inc: {downpoopCount: -1}, $pull: {downpoop: req.user._id} }
+            } else if (hasUserUplicked) {
+                updateObject = {
+                    $inc: {downpoopCount: 1, uplickCount: -1}, 
+                    $push: {downpoop: req.user._id},
+                    $pull: {uplick: req.user._id}
+                }
+            } else {
+                updateObject = { $inc: {downpoopCount: 1}, $push: {downpoop: req.user._id} }
+            }
             Smell.findByIdAndUpdate(req.params.smellID, updateObject, {new: true})
                 .populate('downpoop', 'username -_id')
                 .exec((err, data) => {

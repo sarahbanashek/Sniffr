@@ -32,7 +32,7 @@ const configureRoutes = (app, authenticationMiddleware) => {
     
     app.delete('/deleteSmell/:smellID', ensureAuthenticated, smellController.deleteSmell);
     
-    app.get('/profile', ensureAuthenticated, smellController.profileFeed);
+    app.get('/mySmells', ensureAuthenticated, smellController.mySmellsFeed);
 
     app.get('/logout', (req, res) => {
         req.logout();

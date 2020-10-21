@@ -4,7 +4,7 @@ include _newSmell
 
 block content
     h1.center
-        span#pageGreeting Welcome to your profile, 
+        span#pageGreeting Here are your smells, 
         span#userGreeting #{username}
 
     +newSmell
@@ -12,5 +12,8 @@ block content
     hr
     h2.center#pageGreeting Revisit your smells
     +displaySmells(smellsArr)
+
+    hr
+    a(href="https://icons8.com/icons/set/dog").footer icons by Icons8
     
     script(src='../public/feed.js')

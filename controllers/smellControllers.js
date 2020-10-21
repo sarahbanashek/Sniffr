@@ -153,7 +153,7 @@ const smellController = {
                 }
             });
     },
-    profileFeed: (req, res) => {
+    mySmellsFeed: (req, res) => {
         Smell.find({ creator: req.user._id })
             .sort({dateCreated: -1})
             .limit(10)
@@ -174,7 +174,7 @@ const smellController = {
                     smell.uplickers = smell.uplick.map(x => x.username).join(', ');
                     smell.downpoopers = smell.downpoop.map(x => x.username).join(', ');
                     });
-                    res.render(process.cwd() + '/views/profile', {title: 'Profile', username: req.user.username, smellsArr: smellsArr});
+                    res.render(process.cwd() + '/views/mySmells', {title: 'My Smells', username: req.user.username, smellsArr: smellsArr});
                 }
         }); 
     }

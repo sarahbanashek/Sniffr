@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@400;500;700&family=Bellota+Text:wght@400;700&family=Ubuntu:wght@300;400;500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
 
 .border {
     border-style: inset;
@@ -15,9 +16,7 @@
 #login-form {
     margin-left: auto;
     margin-right: auto;
-    /* text-align: center;
-    font-family: 'Bellota Text', cursive;
-    font-weight: 700; */
+    font-weight: 500;
 }
 
 .navbar {
@@ -27,55 +26,118 @@
 }
 
 .navbar-brand {
-    font-family: 'Baloo Chettan 2', cursive;
     font-weight: bolder;
     color: white;
 }
 
 .navlink {
     color: white;
-    font-family: 'Baloo Chettan 2', cursive;
     font-weight: 700;
 }
+
 .navlink:hover {
     color: lightseagreen;
     text-decoration: none;
 }
 
-#title { 
+.body {
     font-family: 'Baloo Chettan 2', cursive;
+}
+
+#title { 
     font-weight: bolder;
 }
 
-#pageGreeting, #newSmell-box1 {
-    font-family: 'Bellota Text', cursive;
-}
-
-#userGreeting {
-    font-family: 'Baloo Chettan 2', cursive;
+.post-smell-button {
+    width: 96px;
+    height: 96px;
+    background-image: url('./icons/post-smell-button.png');
+    background-color: transparent;
+    background-size: cover;
+    border: none;
 }
 
 .oneSmell {
-    font-family: 'Bellota Text', cursive;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
-    /* display: grid;
-    grid-template-columns: 10% 90%; */
 }
 
-.smellCreator {
-    font-family: 'Baloo Chettan 2', cursive;
-    /* grid-column: 1/3; */
-}
-
-.licks-and-poops {
+.card-header {
     display: grid;
-    grid-template-columns: 50% 50%;
+}
+
+.card-footer {
+    display: flow-root;
+}
+
+.licks-and-poops-and-kicks {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.licks-and-poops-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.uplick-button {
+    width: 48px;
+    height: 48px;
+    background-image: url('./icons/uplick-button-v2.png');
+    background-size: cover;
+    background-color: transparent;
+    border-radius: 5px;
+}
+
+.uplick-button-success {
+    width: 48px;
+    height: 48px;
+    background-image: url('./icons/uplick.png');
+    background-size: cover;
+    border-radius: 5px;
+}
+
+.uplick-count-success {
+    color: #C30000;
+    font-weight: bold;
+}
+
+.downpoop-button {
+    width: 48px;
+    height: 48px;
+    background-image: url('./icons/downpoop-button-v3.png');
+    background-size: cover;
+    background-color: transparent;
+}
+
+.downpoop-button-success {
+    width: 48px;
+    height: 48px;
+    background-image: url('./icons/downpoop-success-v3.png');
+    background-size: cover;
+    border-radius: 5px;
+}
+
+.downpoop-count-success {
+    color: #5A2A0A;
+    font-weight: bold;
+}
+
+.kick-button {
+    width: 48px;
+    height: 48px;
+    background-image: url('./icons/kick-button-v2.png');
+    background-size: cover;
+    background-color: transparent;
+    border: none;
 }
 
 .smellTime {
-    /* grid-column: 1/3; */
     font-size: small;
 }
 
+.delete-smell {
+    float: left;
+}

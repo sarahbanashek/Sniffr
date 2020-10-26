@@ -7,6 +7,11 @@ mixin displaySmells(smellsArr)
             each smell in smellsArr
                 .oneSmell.card.text-center.mr-1
                     .card-header
+                        //- if username === smell.creator.username
+                        //-     span.delete-smell
+                        //-         p(hidden).deleteUrl= smell.deleteUrl
+                        //-         form(action=smell.deleteUrl method='delete').delete
+                        //-         button.deleteButton.btn.btn-sm.btn-danger Delete
                         .h4.smellCreator= smell.creator.username
                         if smell.kickedFrom
                             .h6.kickedFrom
@@ -18,34 +23,39 @@ mixin displaySmells(smellsArr)
                         if smell.textContent
                             h5.smellTextContent= smell.textContent
                     .card-footer
-                        .licks-and-poops
-                            //- if the order of these nodes or their class names change, event handlers in /public/feed.js may break
-                            .uplicks
+                        .licks-and-poops-and-kicks
+                            //- changes to the order of these nodes or their class names may break event handlers in /public/feed.js
+                            .uplicks.licks-and-poops-container
+                                .lick-poop-kick-label uplick
                                 if smell.uplicked
-                                    p.uplickButton.btn.btn-success Uplick
+                                    .uplick-button-success.uplickButton(title='you uplicked this smell')
+                                    .uplick-count.uplick-count-success= smell.uplickCount
                                 else
-                                    p.uplickButton.btn.btn-primary Uplick
-                                .uplickCount= smell.uplickCount
+                                    .uplick-button.uplickButton(title='uplick')
+                                    .uplick-count= smell.uplickCount
                                 //- if smell.uplickCount > 0
                                     //- span.lickers-poopers uplicked by: 
                                     //- span.uplickers= smell.uplickers
                                 p(hidden).uplickUrl= smell.uplickUrl
-                            .downpoops
+                            .downpoops.licks-and-poops-container
+                                .lick-poop-kick-label downpoop
                                 if smell.downpooped
-                                    p.downpoopButton.btn.btn-success Downpoop
+                                    .downpoop-button-success.downpoopButton(title='you downpooped this smell')
+                                    .downpoop-count.downpoop-count-success= smell.downpoopCount
                                 else
-                                    p.downpoopButton.btn.btn-primary Downpoop
-                                .downpoopCount= smell.downpoopCount
+                                    .downpoop-button.downpoopButton(title='downpoop')
+                                    .downpoop-count= smell.downpoopCount
                                 //- if smell.downpoopCount > 0
                                 //-     span.lickers-poopers downpooped by: 
                                 //-     span.downpoopers= smell.downpoopers
                                 p(hidden).downpoopUrl= smell.downpoopUrl
-                        form(action=smell.kickUrl method='post').kick
-                            button.kickButton.btn.btn-secondary Kick
+                            form(action=smell.kickUrl method='post').kick
+                                .lick-poop-kick-label kick
+                                button.kick-button(title='kick')
                         .smellTime= smell.dateCreated.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) + ' on ' + smell.dateCreated.toLocaleDateString()
                         if username === smell.creator.username
                             .delete-smell
                                 p(hidden).deleteUrl= smell.deleteUrl
                                 form(action=smell.deleteUrl method='delete').delete
-                                button.deleteButton.btn.btn-sm.btn-danger Delete this smell
+                                button.deleteButton.btn.btn-sm.btn-danger Delete
                             

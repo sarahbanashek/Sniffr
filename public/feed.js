@@ -1,10 +1,11 @@
 const handleUplick = (event) => {
     const uplickButton = event.target;
-    const uplickCount = uplickButton.parentNode.getElementsByClassName('uplickCount')[0];
+    const uplickCountNode = uplickButton.parentNode.children[2];
     const uplickUrl = uplickButton.parentNode.getElementsByClassName('uplickUrl')[0].innerText;
     const downpoopNode = uplickButton.parentNode.nextElementSibling;
-    const downpoopButton = downpoopNode.children[0];
-    const downpoopCount = downpoopNode.getElementsByClassName('downpoopCount')[0];
+    const downpoopButton = downpoopNode.children[1];
+    const downpoopCountNode = downpoopNode.getElementsByClassName('downpoop-count')
+    const downpoopCountText = downpoopCountNode[0];
     // const uplickers = uplickButton.parentNode.getElementsByClassName('uplickers')[0];
 
     fetch(uplickUrl, {method: 'POST'})
@@ -13,15 +14,20 @@ const handleUplick = (event) => {
             return response.json();
         })
         .then((data) => {
-            uplickCount.innerText = data.uplickCount;
-            downpoopCount.innerText = data.downpoopCount;
-            if (uplickButton.classList.contains('btn-success')) {
-                uplickButton.classList.replace('btn-success', 'btn-primary');
+            uplickCountNode.innerText = data.uplickCount;
+            downpoopCountText.innerText = data.downpoopCount;
+            uplickCountNode.classList.toggle('uplick-count-success');
+            if (uplickButton.classList.contains('uplick-button-success')) {
+                uplickButton.classList.replace('uplick-button-success', 'uplick-button');
+                uplickButton.title = 'uplick';
             } else {
-                uplickButton.classList.replace('btn-primary', 'btn-success');
+                uplickButton.classList.replace('uplick-button', 'uplick-button-success');
+                uplickButton.title = 'you uplicked this smell';
             }
-            if (downpoopButton.classList.contains('btn-success')) {
-                downpoopButton.classList.replace('btn-success', 'btn-primary');
+            if (downpoopButton.classList.contains('downpoop-button-success')) {
+                downpoopButton.classList.replace('downpoop-button-success', 'downpoop-button');
+                downpoopButton.title = 'downpoop';
+                downpoopCountNode[0].classList.remove('downpoop-count-success');
             }
             // uplickers.innerText = data.uplick.map(x => x.username).join(', ')
         });
@@ -33,11 +39,13 @@ for(let button of uplickButtons) {
 
 const handleDownpoop = (event) => {
     const downpoopButton = event.target;
-    const downpoopCount = downpoopButton.parentNode.getElementsByClassName('downpoopCount')[0];
+    const downpoopCountNode = downpoopButton.parentNode.children[2];
+    // const downpoopCount = downpoopButton.parentNode.getElementsByClassName('downpoop-count')[0];
     const downpoopUrl = downpoopButton.parentNode.getElementsByClassName('downpoopUrl')[0].innerText;
     const uplickNode = downpoopButton.parentNode.previousElementSibling;
-    const uplickButton = uplickNode.children[0];
-    const uplickCount = uplickNode.getElementsByClassName('uplickCount')[0];
+    const uplickButton = uplickNode.children[1];
+    const uplickCountNode = uplickNode.getElementsByClassName('uplick-count');
+    const uplickCount = uplickCountNode[0];
     // const downpoopers = downpoopButton.parentNode.getElementsByClassName('downpoopers')[0];
 
     fetch(downpoopUrl, {method: 'POST'})
@@ -45,15 +53,20 @@ const handleDownpoop = (event) => {
             return response.json();
         })
         .then((data) => {
-            downpoopCount.innerText = data.downpoopCount;
+            downpoopCountNode.innerText = data.downpoopCount;
             uplickCount.innerText = data.uplickCount;
-            if (downpoopButton.classList.contains('btn-success')) {
-                downpoopButton.classList.replace('btn-success', 'btn-primary');
+            downpoopCountNode.classList.toggle('downpoop-count-success');
+            if (downpoopButton.classList.contains('downpoop-button-success')) {
+                downpoopButton.classList.replace('downpoop-button-success', 'downpoop-button');
+                downpoopButton.title = 'downpoop';
             } else {
-                downpoopButton.classList.replace('btn-primary', 'btn-success');
+                downpoopButton.classList.replace('downpoop-button', 'downpoop-button-success');
+                downpoopButton.title = 'you downpooped this smell';
             }
-            if (uplickButton.classList.contains('btn-success')) {
-                uplickButton.classList.replace('btn-success', 'btn-primary');
+            if (uplickButton.classList.contains('uplick-button-success')) {
+                uplickButton.classList.replace('uplick-button-success', 'uplick-button');
+                uplickButton.title = 'uplick';
+                uplickCountNode[0].classList.remove('uplick-count-success');
             }
             // downpoopers.innerText = data.downpoop.map(x => x.username).join(', ');
         });
@@ -68,7 +81,7 @@ const handleDeleteSmell = (event) => {
     const deleteUrl = deleteButton.parentNode.getElementsByClassName('deleteUrl')[0].innerText;
 
     fetch(deleteUrl, {method: 'DELETE'})
-        .then(res => {
+        .then(() => {
             const thisSmell = deleteButton.closest('.oneSmell');
             thisSmell.parentNode.removeChild(thisSmell);
         });

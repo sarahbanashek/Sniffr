@@ -1,9 +1,12 @@
+include _newSmellCard
+
 mixin displaySmells(smellsArr)
     |
     hr
     |
     .smellFeed
         .card-columns
+            +newSmellCard
             each smell in smellsArr
                 .oneSmell.card.text-center.mr-1
                     .card-header
@@ -19,8 +22,8 @@ mixin displaySmells(smellsArr)
                                 span.smellCreator= smell.kickedFrom.username
                     if smell.imageContent
                         img(src=smell.imageContent).smellImageContent.card-img-top
-                    .card-body
-                        if smell.textContent
+                    if smell.textContent
+                        .card-body
                             h5.smellTextContent= smell.textContent
                     .card-footer
                         .licks-and-poops-and-kicks

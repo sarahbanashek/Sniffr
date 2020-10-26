@@ -1,0 +1,9 @@
+mixin newSmellCard
+    .newSmellCard.card.text-white.bg-info.text-center.mr-1
+        .card-header
+            .h4 Add a Smell
+        .card-body
+            form.center.w-75(action='/createSmell' method='post')
+                textarea.form-control(rows='5' name='postContent' placeholder='Announce a new smell')
+                input.form-control(type='text' name='imageContent' placeholder='Paste image link here')
+                button.post-smell-button(type='submit' title='Spread that news!')

@@ -3,14 +3,10 @@ include _displaySmells
 include _newSmell
 
 block content
-    h1.center
-        span#pageGreeting Here are your smells, 
-        span#userGreeting #{username}
+    h1.center Here are your smells, #{username}
 
     +newSmell
 
-    hr
-    h2.center#pageGreeting Revisit your smells
     +displaySmells(smellsArr)
 
     hr

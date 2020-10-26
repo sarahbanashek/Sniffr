@@ -11,6 +11,10 @@
     margin: 10px;
     margin-left: 10px;
 }
+
+.body {
+    font-family: 'Baloo Chettan 2', cursive;
+}
   
 .center {
     text-align: center;

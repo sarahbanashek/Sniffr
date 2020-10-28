@@ -124,6 +124,30 @@
     border-radius: 5px;
 }
 
+@keyframes uplick{
+    0%{
+        background-image: url('./icons/hover-uplick-1.png');
+    }
+    33%{
+        background-image: url('./icons/hover-uplick-2.png');
+    }
+    67%{
+        background-image: url('./icons/hover-uplick-3.png');
+    }
+    100%{
+        background-image: url('./icons/hover-uplick-4.png');
+    }
+}
+
+.uplick-button:hover {
+    width: 48px;
+    height: 48px;
+    background-size: contain;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    animation: uplick 1s infinite;
+}
+
 .uplick-button-success {
     width: 48px;
     height: 48px;
@@ -187,7 +211,6 @@
     background-size: contain;
     background-color: transparent;
     background-repeat: no-repeat;
-    border-radius: 5px;
     animation: kick 1s infinite;
 }
 

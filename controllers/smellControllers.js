@@ -173,6 +173,8 @@ const smellController = {
                     smell.deleteUrl = '/deleteSmell/' + smell._id;
                     smell.uplickers = smell.uplick.map(x => x.username).join(', ');
                     smell.downpoopers = smell.downpoop.map(x => x.username).join(', ');
+                    smell.uplicked = smell.uplickers.includes(req.user.username);
+                    smell.downpooped = smell.downpoopers.includes(req.user.username);
                     });
                     res.render(process.cwd() + '/views/mySmells', {title: 'My Smells', username: req.user.username, smellsArr: smellsArr});
                 }

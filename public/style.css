@@ -50,6 +50,11 @@
     font-weight: bolder;
 }
 
+.smell-cards {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 .post-smell-button {
     width: 100%;
     height: 96px;

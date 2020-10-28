@@ -27,17 +27,18 @@
 
 .navbar-brand {
     font-weight: bolder;
-    font-size: x-large;
+    font-size: xx-large;
     color: white;
 }
 
 .navlink {
     color: white;
     font-weight: 700;
+    font-size: x-large;
 }
 
 .navlink:hover {
-    color: lightseagreen;
+    color: #17a2b8;
     text-decoration: none;
 }
 

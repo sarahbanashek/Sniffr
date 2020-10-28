@@ -10,11 +10,6 @@ mixin displaySmells(smellsArr)
             each smell in smellsArr
                 .oneSmell.card.text-center.mr-1
                     .card-header
-                        //- if username === smell.creator.username
-                        //-     span.delete-smell
-                        //-         p(hidden).deleteUrl= smell.deleteUrl
-                        //-         form(action=smell.deleteUrl method='delete').delete
-                        //-         button.deleteButton.btn.btn-sm.btn-danger Delete
                         .h4.smellCreator= smell.creator.username
                         if smell.kickedFrom
                             .h6.kickedFrom

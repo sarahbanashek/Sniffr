@@ -164,15 +164,42 @@
 .downpoop-button {
     width: 48px;
     height: 48px;
-    background-image: url('./icons/downpoop-button-v3.png');
+    background-image: url('./icons/hover-downpoop-1.png');
     background-size: cover;
     background-color: transparent;
+}
+
+@keyframes downpoop{
+    0%{
+        background-image: url('./icons/hover-downpoop-1.png');
+    }
+    25%{
+        background-image: url('./icons/hover-downpoop-2.png');
+    }
+    50%{
+        background-image: url('./icons/hover-downpoop-3.png');
+    }
+    75%{
+        background-image: url('./icons/hover-downpoop-4.png');
+    }
+    100%{
+        background-image: url('./icons/hover-downpoop-5.png');
+    }
+}
+
+.downpoop-button:hover {
+    width: 48px;
+    height: 48px;
+    background-size: contain;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    animation: downpoop 1s infinite;
 }
 
 .downpoop-button-success {
     width: 48px;
     height: 48px;
-    background-image: url('./icons/downpoop-success-v3.png');
+    background-image: url('./icons/hover-downpoop-5.png');
     background-size: cover;
     border-radius: 5px;
 }

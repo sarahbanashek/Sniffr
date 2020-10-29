@@ -86,7 +86,9 @@ describe('Controller: smellController', () => {
                 kickUrl: '/kick/5',
                 deleteUrl: '/deleteSmell/5',
                 uplickers: 'uplick user1, uplick user2',
-                downpoopers: 'downpoop user1, downpoop user2'
+                downpoopers: 'downpoop user1, downpoop user2',
+                uplicked: false,
+                downpooped: false
             }];
             jest.spyOn(process, 'cwd').mockReturnValue('');
             const expectedResObject = {

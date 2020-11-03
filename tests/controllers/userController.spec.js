@@ -44,7 +44,7 @@ describe('Controller: userController', () => {
             expect(fakeResponse.send).toHaveBeenCalledWith(expectedSentObject);
         });
     });
-    describe('Function: welcomeUser', () => {
+    describe('Function: createUser', () => {
         let fakeRequest;
         let fakeResponse = {};
         beforeEach(() => {
@@ -63,7 +63,7 @@ describe('Controller: userController', () => {
             fakeResponse.send = jest.fn();
             const expectedSentMessage = 'Passwords do not match!';
 
-            userController.welcomeUser(fakeRequest, fakeResponse);
+            userController.createUser(fakeRequest, fakeResponse);
 
             expect(fakeResponse.send).toHaveBeenCalledWith(expectedSentMessage);
         });
@@ -74,7 +74,7 @@ describe('Controller: userController', () => {
                 callback(expectedError);
             });
 
-            userController.welcomeUser(fakeRequest, fakeResponse);
+            userController.createUser(fakeRequest, fakeResponse);
 
             expect(fakeResponse.send).toHaveBeenCalledWith(expectedError);
         });
@@ -88,11 +88,11 @@ describe('Controller: userController', () => {
                 callback(expectedError);
             });
 
-            userController.welcomeUser(fakeRequest, fakeResponse);
+            userController.createUser(fakeRequest, fakeResponse);
 
             expect(fakeResponse.send).toHaveBeenCalledWith(expectedError);
         });
-        test('renders the welcome page if the username is available', () => {
+        test('renders the login page if the username is available', () => {
             jest.spyOn(User, 'find').mockImplementation((_, callback) => {
                 callback(null, []);
             });
@@ -100,8 +100,7 @@ describe('Controller: userController', () => {
                 username: 'username'
             }
             const expectedResObject = {
-                title: 'Welcome New User',
-                username: userDoc.username
+                title: 'Login', welcomeMessage: `Welcome to the pack, ${userDoc.username}! Log in to check out the latest smells!`
             }
             fakeResponse.render = jest.fn();
             jest.spyOn(User.prototype, 'save').mockImplementation((callback) => {
@@ -109,9 +108,9 @@ describe('Controller: userController', () => {
             });
             jest.spyOn(process, 'cwd').mockReturnValue('');
 
-            userController.welcomeUser(fakeRequest, fakeResponse);
+            userController.createUser(fakeRequest, fakeResponse);
 
-            expect(fakeResponse.render).toHaveBeenCalledWith('/views/welcome', expectedResObject);
+            expect(fakeResponse.render).toHaveBeenCalledWith('/views/login', expectedResObject);
         });
         test('sends a message if username is already in use', () => {
             jest.spyOn(User, 'find').mockImplementation((_, callback) => {
@@ -120,7 +119,7 @@ describe('Controller: userController', () => {
             const expectedSentMessage = 'Please choose a different username';
             fakeResponse.send = jest.fn();
 
-            userController.welcomeUser(fakeRequest, fakeResponse);
+            userController.createUser(fakeRequest, fakeResponse);
 
             expect(fakeResponse.send).toHaveBeenCalledWith(expectedSentMessage);
         });

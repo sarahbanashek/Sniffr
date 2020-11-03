@@ -11,6 +11,8 @@ html
         h5.center.my-4 Log In
         if errorMessage
             .error-message.center=errorMessage
+        if welcomeMessage
+            .welcome-message.center=welcomeMessage
         form(action='/login' method='post').w-75#login-form
             .form-group
                 label Username

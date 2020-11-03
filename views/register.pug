@@ -9,7 +9,7 @@ html
     body.body
         h1.border.rounded.center.w-75#title sniffr
         h5.center.my-4 Create your account!
-        form(action='/welcome' method='post').registration-form.w-75
+        form(action='/register' method='post').registration-form.w-75
             .row.my-3
                 .col
                     input(type='text' placeholder='First Name' name='firstname' required=true).form-control
@@ -28,5 +28,10 @@ html
             button(type='submit').btn.btn-primary.mt-4 Create Account
 
     
+        hr
+        .text-center.mt-5
+            div.mb-3 Already a member?
+            a(href='login' role='button').btn.btn-secondary Log in
+
     script(src='../public/register.js')
     

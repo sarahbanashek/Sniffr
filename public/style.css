@@ -28,7 +28,14 @@
 
 .error-message {
     font-weight: bold;
+    font-size: larger;
     color: #dc3545;
+}
+
+.welcome-message {
+    font-weight: bold;
+    font-size: larger;
+    color: #28a745;
 }
 
 .registration-form {

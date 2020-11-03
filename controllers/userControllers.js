@@ -16,7 +16,7 @@ const userController = {
             }
         })
     },
-    welcomeUser: (req, res) => {
+    createUser: (req, res) => {
         if (req.body.password !== req.body.confirmpassword) {
             res.send('Passwords do not match!'); 
         } else {
@@ -35,7 +35,7 @@ const userController = {
                             if (err) {
                                 res.send(err)
                             } else {
-                                res.render(process.cwd() + '/views/welcome', {title: 'Welcome New User', username: userDoc.username});
+                                res.render(process.cwd() + '/views/login', {title: 'Login', welcomeMessage: `Welcome to the pack, ${userDoc.username}! Log in to check out the latest smells!`});
                             }
                         });
                     } else {

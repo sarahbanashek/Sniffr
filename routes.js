@@ -3,23 +3,20 @@ const smellController = require('./controllers/smellControllers');
 const ensureAuthenticated = require('./middlewares/ensureAuthenticated');
 
 const configureRoutes = (app, authenticationMiddleware) => {
-    app.get('/', (_, res) => {
-        res.render(process.cwd() + '/views/login', {title: 'Login'});
+    app.get('/', (req, res) => {
+        res.render(process.cwd() + '/views/login', {title: 'Login', errorMessage: req.flash('error')});
     });
     
-    app.post('/login', authenticationMiddleware, (_, res) => {
-        res.redirect('/feed');
-    });
-    
+    app.post('/login', authenticationMiddleware);
+
     app.route('/register')
         .get((_, res) => {
             res.render(process.cwd() + '/views/register', {title: 'Register'});
         });
     
     app.get('/checkUsername/:username', userController.checkUserName);
-
-    app.post('/welcome', userController.welcomeUser);
     
+    app.post('/welcome', userController.createUser);
     app.get('/feed', ensureAuthenticated, smellController.smellFeed);
        
     app.post('/createSmell', ensureAuthenticated, smellController.createSmell);

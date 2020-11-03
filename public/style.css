@@ -274,3 +274,9 @@
 .delete-smell {
     float: left;
 }
+
+.footer {
+    text-align:center;
+    display:block;
+    padding-bottom: 5px;
+}

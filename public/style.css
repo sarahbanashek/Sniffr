@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@400;500;700&family=Bellota+Text:wght@400;700&family=Ubuntu:wght@300;400;500&display=swap");
+
+.border {
+    border-style: inset;
+    border-width: 1px;
+    margin: 10px;
+}
+  
+.center {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#login-form {
+    margin-left: auto;
+    margin-right: auto;
+    /* text-align: center;
+    font-family: 'Bellota Text', cursive;
+    font-weight: 700; */
+}
+
+.navbar {
+    background-color: black;
+    color: white;
+    margin-bottom: 1em;
+}
+
+.navbar-brand {
+    font-family: 'Baloo Chettan 2', cursive;
+    font-weight: bolder;
+    color: white;
+}
+
+.navlink {
+    color: white;
+    font-family: 'Baloo Chettan 2', cursive;
+    font-weight: 700;
+}
+.navlink:hover {
+    color: lightseagreen;
+    text-decoration: none;
+}
+
+#title { 
+    font-family: 'Baloo Chettan 2', cursive;
+    font-weight: bolder;
+}
+
+#pageGreeting, #newSmell-box1 {
+    font-family: 'Bellota Text', cursive;
+}
+
+#userGreeting {
+    font-family: 'Baloo Chettan 2', cursive;
+}
+
+.oneSmell {
+    font-family: 'Bellota Text', cursive;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    /* display: grid;
+    grid-template-columns: 10% 90%; */
+}
+
+.smellCreator {
+    font-family: 'Baloo Chettan 2', cursive;
+    /* grid-column: 1/3; */
+}
+
+.licks-and-poops {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.smellTime {
+    /* grid-column: 1/3; */
+    font-size: small;
+}
+

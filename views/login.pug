@@ -1,0 +1,25 @@
+doctype html
+html
+    head
+        title Sniffr - #{title}
+        meta(charset='utf-8')
+        link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous")
+        link(rel='stylesheet' href='../public/style.css')
+
+    body
+        h1.border.rounded.center.w-75#title sniffr
+        h5.center.my-4 Log In
+        form(action='/login' method='post').w-75#login-form
+            .form-group
+                label Username
+                input(type='text' name='username' required=true).form-control
+            .form-group
+                label Password 
+                input(type='password' name='password' required=true).form-control
+            .form.mt-4.text-center
+                button(type='submit').btn.btn-primary Log In
+
+        hr
+        .text-center.mt-5
+            div.mb-3 Not part of the pack yet?
+            a(href='register' role='button').btn.btn-secondary Register

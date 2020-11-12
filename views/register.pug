@@ -1,0 +1,32 @@
+doctype html
+html
+    head
+        title Sniffr - #{title}
+        meta(charset='utf-8')
+        link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous")
+        link(rel='stylesheet' href='../public/registration.css')
+
+    body
+        h1.border.rounded.center.w-75#title sniffr
+        h5.center.my-4 Create your account!
+        form(action='/welcome' method='post').registration-form.w-75
+            .row.my-3
+                .col
+                    input(type='text' placeholder='First Name' name='firstname' required=true).form-control
+                .col
+                    input(type='text' placeholder='Last Name' name='lastname' required=true).form-control
+            .input-group.my-3
+                input(type='text' placeholder='Username' required=true id='username' aria-label='Username' aria-describedby='check-available').form-control
+                .input-group-append
+                    button(type='button' id='check-available').btn.btn-outline-success.check-available Check availability
+            #display-availability.alert.my-3(hidden=true)
+            .row.my-3  
+                .col
+                    input(type='password' placeholder='Password' name='password' required=true).form-control
+                .col
+                    input(type='password' placeholder='Confirm Password' name='confirmpassword' required=true).form-control
+            button(type='submit').btn.btn-primary.mt-4 Create Account
+
+    
+    script(src='../public/register.js')
+    

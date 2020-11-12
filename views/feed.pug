@@ -1,0 +1,16 @@
+extends index.pug
+include _displaySmells
+include _newSmell
+
+block content
+    h1.center
+        span#pageGreeting Here are the latest smells, 
+        span#userGreeting #{username}
+
+    +newSmell
+    
+    +displaySmells(smellsArr)
+
+
+    script(src='../public/feed.js')
+    

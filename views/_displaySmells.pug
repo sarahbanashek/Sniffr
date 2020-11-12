@@ -1,0 +1,42 @@
+mixin displaySmells(smellsArr)
+    |
+    hr
+    |
+    .smellFeed
+        .card-columns
+            each smell in smellsArr
+                .oneSmell.card.text-center.mr-1
+                    .card-header
+                        .h4.smellCreator= smell.creator.username
+                        if smell.kickedFrom
+                            .h6.kickedFrom
+                                span This smell was kicked from 
+                                span.smellCreator= smell.kickedFrom.username
+                    if smell.imageContent
+                        img(src=smell.imageContent).smellImageContent.card-img-top
+                    .card-body
+                        if smell.textContent
+                            h5.smellTextContent= smell.textContent
+                    .card-footer
+                        .licks-and-poops
+                            .uplicks
+                                p.uplickButton.btn.btn-primary Uplick
+                                .uplickCount= smell.uplickCount
+                                if smell.uplickCount > 0
+                                    span.lickers-poopers uplickers: 
+                                    span.uplickers= smell.uplickers
+                                p(hidden).uplickUrl= smell.uplickUrl
+                            .downpoops
+                                p.downpoopButton.btn.btn-primary Downpoop
+                                .downpoopCount= smell.downpoopCount
+                                if smell.downpoopCount > 0
+                                    span.lickers-poopers downpoopers: 
+                                    span.downpoopers= smell.downpoopers
+                                p(hidden).downpoopUrl= smell.downpoopUrl
+                        form(action=smell.kickUrl method='post').kick
+                            button.kickButton.btn.btn-secondary Kick
+                            //- p(hidden).kickUrl= smell.kickUrl
+                        .smellTime= smell.dateCreated.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) + ' on ' + smell.dateCreated.toLocaleDateString()
+                        if username === smell.creator.username
+                            form(action=smell.deleteUrl method='get').delete
+                                button.deleteButton.btn.btn-sm.btn-danger Delete this smell

@@ -1,0 +1,16 @@
+extends index.pug
+include _displaySmells
+include _newSmell
+
+block content
+    h1.center
+        span#pageGreeting Welcome to your profile, 
+        span#userGreeting #{username}
+
+    +newSmell
+
+    hr
+    h2.center#pageGreeting Revisit your smells
+    +displaySmells(smellsArr)
+    
+    script(src='../public/feed.js')

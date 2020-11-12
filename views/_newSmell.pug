@@ -1,0 +1,5 @@
+mixin newSmell
+    form.center.w-75(action='/createSmell' method='post')
+        textarea.form-control(rows='5' name='postContent' placeholder='Announce a new smell')
+        input.form-control(type='text' name='imageContent' placeholder='Paste image link here')
+        button.btn.btn-primary.mt-2(type='submit') Spread that news!

@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@400;500;700&family=Bellota+Text:wght@400;700&family=Ubuntu:wght@300;400;500&display=swap");
+
+#title { 
+    font-family: 'Baloo Chettan 2', cursive;
+    font-weight: bolder;
+}
+
+.border {
+    border-style: inset;
+    border-width: 1px;
+    margin: 10px;
+    margin-left: 10px;
+}
+  
+.center {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.registration-form {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#display-availability {
+    margin-left: 1em;
+}

@@ -21,6 +21,19 @@ The kick button creates a new smell with the exact same content. The newly creat
 The My Smells page uses the same format as the Smell Feed, but shows only the Smells that the member has posted.
 ![Smell Feed gif](img/MySmells.gif)
 
+---
+
+## Technologies Used
+- Pug
+- Node.js
+- Express.js
+- Passport
+- MongoDB
+- Mongoose
+- Jest
+
+---
+
 ## TODO:
 - Update User schema to include the field 'displayName' and store usernames in lowercase (to avoid duplicate usernames - e.g. pupper & Pupper)
 - Add requirements for password strength

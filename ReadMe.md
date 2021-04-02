@@ -4,21 +4,22 @@ Sniffr is a web application designed to allow pups to share the latest news.
 
 ## Features
 ### The Smell Feed
-The Smell Feed shows all the latest smells that have been posted by any member of Sniffr.
+The Smell Feed shows all the latest smells that have been posted by any member of Sniffr.  
 ![Smell Feed gif](img/SmellFeed.gif)
 
-Members can post their smells (text and/or images) in the first card of the feed.
+Members can post their smells (text and/or images) in the first card of the feed.  
 ![Add a smell](img/newSmellButton.gif)
 
 ### Reacting to Smells
-Below the content of each smell are three icons: uplick, downpoop, and kick.
+Below the content of each smell are three icons: uplick, downpoop, and kick.  
 ![Reaction buttons](img/buttonIcons.gif)  
 The uplick and downpoop buttons signify positive and negative reactions respectively.  
+
 The kick button creates a new smell with the exact same content. The newly created smell will specify that it was kicked and from whom.  
 ![Kicked Smell](img/kickedSmell.png)
 
 ### My Smells
-The My Smells page uses the same format as the Smell Feed, but shows only the Smells that the member has posted.
+The My Smells page uses the same format as the Smell Feed, but shows only the Smells that the member has posted.  
 ![Smell Feed gif](img/MySmells.gif)
 
 ---
